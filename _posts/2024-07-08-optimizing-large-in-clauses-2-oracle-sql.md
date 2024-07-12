@@ -61,6 +61,7 @@ INSERT INTO test_table VALUES (
 COMMIT;
 ```
 
+## 테스트-JS
 
 NodeJS에서 간단 테스트     
 
@@ -136,3 +137,71 @@ Successfully connected to Oracle Database
 ```
 
 결과까지 잘 나온다.   
+
+## 테스트-자바 
+
+생각해 보니 오라클 사용하는곳은 자바를 주로 사용한다 
+
+
+```JAVA
+
+
+import java.sql.*;
+import oracle.jdbc.OracleConnection;
+import oracle.sql.ARRAY;
+import oracle.sql.ArrayDescriptor;
+import oracle.sql.STRUCT;
+import oracle.sql.StructDescriptor;
+
+public class OracleTableTypeExample {
+    public static void main(String[] args) {
+        String url = "jdbc:oracle:thin:@localhost:1521/XE";
+        String user = "your_username";
+        String password = "your_password";
+
+        try (Connection conn = DriverManager.getConnection(url, user, password)) {
+            OracleConnection oraConn = conn.unwrap(OracleConnection.class);
+
+            // Object Type 디스크립터 생성
+            StructDescriptor objectDescriptor = StructDescriptor.createDescriptor("MY_OBJECT_TYPE", oraConn);
+
+            // Table Type 디스크립터 생성
+            ArrayDescriptor tableDescriptor = ArrayDescriptor.createDescriptor("MY_TABLE_TYPE", oraConn);
+
+            // 데이터 준비
+            Object[][] data = {
+                {1, "Item1", 100},
+                {2, "Item2", 200},
+                {3, "Item3", 300}
+            };
+
+            // STRUCT 객체 배열 생성
+            STRUCT[] structs = new STRUCT[data.length];
+            for (int i = 0; i < data.length; i++) {
+                structs[i] = new STRUCT(objectDescriptor, oraConn, data[i]);
+            }
+
+            // ARRAY 객체 생성
+            ARRAY dataArray = new ARRAY(tableDescriptor, oraConn, structs);
+
+            // SQL 쿼리 실행
+            String sql = "SELECT * FROM your_table WHERE (id, name) IN (SELECT id, name FROM TABLE(?))";
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setArray(1, dataArray);
+                
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    while (rs.next()) {
+                        // 결과 처리
+                        System.out.println(rs.getInt("id") + ", " + rs.getString("name") + ", " + rs.getInt("value"));
+                    }
+                }
+            }
+
+            System.out.println("쿼리 실행 완료");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
