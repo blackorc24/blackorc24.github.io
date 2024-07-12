@@ -1,5 +1,5 @@
 ---
-title: Jeyll에 구글 애드센스 추가하기
+title: Chirpy theme Jekyll에 구글 애드센스 추가하기
 author: me
 date: 2024-07-05 00:00:00 +0800
 categories: [기타,GitHub블로그]
