@@ -14,10 +14,6 @@ layout: page
 
     {% if cur_year != last_year %}
       {% unless forloop.first %}</ul>
-        <!-- Google AdSense Code -->
-        <div class="ads">
-          {% include advertising.html %}
-        </div>
       {% endunless %}
 
       <time class="year lead d-block">{{ cur_year }}</time>
@@ -36,10 +32,6 @@ layout: page
     </li>
 
     {% if forloop.last %}</ul>
-      <!-- Google AdSense Code -->
-      <div class="ads">
-        {% include advertising.html %}
-      </div>
     {% endif %}
   {% endfor %}
 </div>
