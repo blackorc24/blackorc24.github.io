@@ -72,7 +72,11 @@ IN조건으로 쓰일 대상은 ```<values>``` 로 시작해서 ```<v>데이터<
 
 ## 활용
 
-개발자에게 connection pool의 직접적인 접근 권한이 없다는   
+개발자에게 오라클 Object Type을 사용하여 바인드 변수를 처리할 것을 권고했으나    
+
+![오늘도개발자가안된다고말했다](../commons/meme/the_developer_said_no_again_today.jpg)   
+
+connection pool의 직접적인 접근 권한이 없다는   
 답변을 받아서 오라클 Object Type이 아닌 이 XMLType의 사용을 권했다    
 상수 부분을 바인드 변수로 변경만 하면 끝   
 효과가 좋다고 한다   
