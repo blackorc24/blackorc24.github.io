@@ -1,5 +1,5 @@
 ---
-title: QMK ACTION_TAP_DANCE_TAP_HOLD를 사용한 탭댄스 구현 키맵파일
+title: QMK ACTION_TAP_DANCE_TAP_HOLD를 사용한 탭홀드 구현 키맵파일
 author: me
 date: 2024-07-04 00:00:00 +0800
 categories: [QMK,Keymap]
@@ -15,7 +15,7 @@ Boardsouce 의 MicroDox V2 키보드를 사용중이다
 Dygma Defy 키보드에도 같은 배열을 적용해서 사용중이다   
 (물론 QMK가 아니므로 전용 앱을 사용합니다)   
 
-##키맵 이미지
+## 키맵 이미지
 
 ![키맵이미지](../posts/2024/keyboard-layout.png)
 
@@ -31,7 +31,7 @@ Dygma Defy 키보드에도 같은 배열을 적용해서 사용중이다
 
 ## 첨부파일 
 
-[키맵파일](../posts/2024/20240704-tapdance-qmk-attach.c)
+[키맵댄스파일](../posts/2024/20240704-tapdance-qmk-attach.c)
 
 
 ## 키맵이미지 만들기 제공 
