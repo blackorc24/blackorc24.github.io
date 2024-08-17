@@ -1,7 +1,7 @@
 ---
-title: SteamDeck에 Wake-on-lan(WOL) 가능하게 설정하기
+title: 스팀덱에 Wake-on-lan(WOL) 가능하게 설정하기
 author: me
-date: 2024-08-13 00:00:00 +0800
+date: 2024-08-16 00:00:00 +0800
 categories: [스팀덱,설정]
 tags: [WOL설정]
 ---
