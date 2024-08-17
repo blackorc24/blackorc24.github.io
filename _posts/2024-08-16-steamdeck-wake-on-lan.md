@@ -62,7 +62,7 @@ $ ip a
 
 의 정보를 미리 갈무리해서 쓰기 좋게 준비해두자    
 
-1. 장치의 WOL설정 확인하기   
+4. 장치의 WOL설정 확인하기   
 
 ```
 $ sudo ethtool enp4sxxxxxx | grep Wake-on
@@ -91,7 +91,7 @@ g: Magic Packet을 감지했을 때 시스템을 깨우는 설정
 
 이런식인데 어째든 ```sudo ethtool -s enp4sxxxxxx wol g``` 로 g 상태로 변경해준다    
 
-5. 테스트 
+6. 테스트 
 
 ```
 $ sudo systemctl stop firewalld
@@ -119,7 +119,7 @@ $ sudo nc --udp --listen --local-port=9 --hexdump
 $ sudo systemctl start firewalld
 ```
 
-6. 이더넷 장치 설정확인 
+7. 이더넷 장치 설정확인 
 
 하지만, 여전히 절전모드에선 깨어나지 않는데       
 USB이더넷 장치드라이버의 WOL설정을 추가해줘야 한다     
@@ -140,14 +140,15 @@ Bus 001 Device 002: ID 0bda:5411 Realtek Semiconductor Corp. RTS5411 Hub
 Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
 ```
 
-이 중에 USB이더넷 장치를 찾아야하는데     
-내가 사용한 애플USB이더넷은 그냥 한개였다    
+이 중에 USB이더넷 장치와 허브를 사용한 경우    
+혀브까지 적용해 줘야 하는데   
+참조링크의 경우는 리얼텍 장치 3개에 모두 적용하는걸로 나오고    
 
-참조링크의 경우는 리얼텍 장치 3개에 모두 적용해 줘야했다    
+내가 쓰는 허브는 허브관련 3개 애플 이더넷 1개로 총 4개를 해줬다   
 
 ```
-$ tail /sys/bus/usb/devices/*/idVendor
-$ tail /sys/bus/usb/devices/*/idProduct
+tail /sys/bus/usb/devices/*/idVendor
+tail /sys/bus/usb/devices/*/idProduct
 ```
 이 명령어를 수행하면 각각    
 ```
@@ -179,7 +180,7 @@ $ tail /sys/bus/usb/devices/*/idProduct
 ```/sys/bus/usb/devices/2-1/``` 경로명을 갈무리해둔다
 
 
-7. 이더넷 장치의 설정 변경 
+1. 이더넷 장치의 설정 변경 
 
 ```
 $ cat /sys/bus/usb/devices/1-1/power/wakeup
@@ -229,22 +230,47 @@ WantedBy=multi-user.target
 로 채우고 
 
 ```
-$ sudo systemctl enable wol.service
+sudo systemctl enable wol.service
 ```
 
-실행해준뒤 
+실행해준뒤  
 
+```
+systemctl status wol.service
+```
+
+제대로 로드 되는지 확인합니다.
+
+저의 경우는 다중열 실행 오류가 나서 
+```
+[Unit]
+Description=Enable WOL usb
+Wants=network-pre.target
+After=network-pre.target NetworkManager.service
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c 'ethtool -s enp4s0f3u1u1 wol g && echo enabled > /sys/bus/usb/devices/1-1.1/power/wakeup && echo enabled > /sys/bus/usb/devices/2-1/power/wakeup && echo enabled > /sys/bus/usb/devices/1-1/power/wakeup && echo enabled > /sys/bus/usb/devices/1-1.5/power/wakeup'
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+```
+
+이렇게 실행하는 곳을 다른 방법으로 이어서 사용했습니다    
+
+그리고 마무리 합니다   
 ```
 sudo steamos-readonly enable
 ```
-로 마무리 합니다  
 
-9. 외부 설정은    
+
+9. 포트포워딩       
 
 공유기에서 ```UDP 9099 -> 9``` 로 포트포워딩을 합니다    
 포트설정은 마음대로이겠으나 통상적으로 공식적으로 알려진 포트는    
 
-기본적인 공격목표이기 때문에 외부포트는 바꾸서 사용합니다     
+기본적인 공격목표이기 때문에 외부포트는 바꿔서 사용합니다     
 
 매직패킷은 응답할 수 없는 장비에 일방적으로 쏴주는것이기에 UDP만 연결해주면 되고요    
 
@@ -256,4 +282,5 @@ sudo steamos-readonly enable
 ## 참조링크   
 
 [레딧에 누가 정리해 놔서 참조(배꼈)했습니다(링크포함)](https://www.reddit.com/r/SteamDeck/comments/1c1hujf/wakeonlan_your_steamdeck_a_full_guide_and_caveats/)
+
 
