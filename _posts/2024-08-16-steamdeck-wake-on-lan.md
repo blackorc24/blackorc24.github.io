@@ -20,14 +20,14 @@ tags: [WOL설정]
 
 ## WOL 설정하기   
 
-1. 읽기전용모드 비활성   
+### 읽기전용모드 비활성   
 
  데스크탑 모드로 진입해서 콘솔을 실행한다    
  ```
  sudo steamos-readonly disable
  ```
 
-2. 패키지 설치 
+### 패키지 설치 
 ```
 sudo pacman -S gnu-netcat 
 ```
@@ -39,7 +39,7 @@ pacman -S iperf3 tmux ethtool net-tools smemstat
 smemstat 는 없을 수도 있는데 제외하고 설치후 진행했지만 문제는 없었다   
 ethtool만 설치해도 괜찮을지도?    
 
-3. 네트워크장치 정보 확인
+### 네트워크장치 정보 확인
 
 이미 설치 끝나서    
 참조한 링크 정보를 그대로 사용했다 
@@ -62,7 +62,7 @@ $ ip a
 
 의 정보를 미리 갈무리해서 쓰기 좋게 준비해두자    
 
-4. 장치의 WOL설정 확인하기   
+### 장치의 WOL설정 확인하기   
 
 ```
 $ sudo ethtool enp4sxxxxxx | grep Wake-on
@@ -91,7 +91,7 @@ g: Magic Packet을 감지했을 때 시스템을 깨우는 설정
 
 이런식인데 어째든 ```sudo ethtool -s enp4sxxxxxx wol g``` 로 g 상태로 변경해준다    
 
-6. 테스트 
+### 테스트 
 
 ```
 $ sudo systemctl stop firewalld
@@ -119,7 +119,7 @@ $ sudo nc --udp --listen --local-port=9 --hexdump
 $ sudo systemctl start firewalld
 ```
 
-7. 이더넷 장치 설정확인 
+### 이더넷 장치 설정확인 
 
 하지만, 여전히 절전모드에선 깨어나지 않는데       
 USB이더넷 장치드라이버의 WOL설정을 추가해줘야 한다     
@@ -180,7 +180,7 @@ tail /sys/bus/usb/devices/*/idProduct
 ```/sys/bus/usb/devices/2-1/``` 경로명을 갈무리해둔다
 
 
-1. 이더넷 장치의 설정 변경 
+### 이더넷 장치의 설정 변경 
 
 ```
 $ cat /sys/bus/usb/devices/1-1/power/wakeup
@@ -203,7 +203,7 @@ $ sudo sh -c "echo enabled > /sys/bus/usb/devices/2-1/power/wakeup"
 
 이제 스팀덱을 절전모드로 만든뒤 매직패킷을 보냅니다(내부네트워크에서 테스트함)    
 
-8. 설정 고정하기 
+### 설정 고정하기 
 
 하지만, 리부팅하고 나면 설정이 사라질거라고 합니다    
 
@@ -265,7 +265,7 @@ sudo steamos-readonly enable
 ```
 
 
-9. 포트포워딩       
+### 포트포워딩       
 
 공유기에서 ```UDP 9099 -> 9``` 로 포트포워딩을 합니다    
 포트설정은 마음대로이겠으나 통상적으로 공식적으로 알려진 포트는    
