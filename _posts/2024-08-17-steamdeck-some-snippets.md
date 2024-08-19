@@ -70,6 +70,7 @@ PubkeyAuthentication yes
 시스템의 저널링으로 인한 데이터를 50MB로 제한합니다 
 
 확인해 보면 10시간 동안 약 22MB정도만 사용되므로 설정 제한을 둡니다    
+
 ```
 # the size for the log, 10 hours
 sudo du -sh /var/log/journal
@@ -77,9 +78,11 @@ sudo du -sh /var/log/journal
 ``` 
 
 * 저널 설정 편집
+
 ```
 emacs /etc/systemd/journald.conf
-
+```
+```
 [Journal]
 #Storage=auto
 #Compress=yes
