@@ -3,7 +3,7 @@ title: 스팀덱의 몇가지 스니펫
 author: me
 date: 2024-08-17 00:00:00 +0800
 categories: [스팀덱,설정]
-tags: [팁]
+tags: [스팀덱팁]
 ---
 
 ## 출처   
