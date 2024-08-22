@@ -87,6 +87,15 @@ deactivate
 
 전문가의 번역과는 비교가 안되기 때문에 그냥 아쉬운 영상 자막을 번역하는 정도로만 사용한다    
 
+```
+srtr.zsh ./02no.srt
+Loading ./02no.srt as ASS
+... Exception while loading as ASS try as SRT
+Loading ./02no.srt as SRT
+Starting translation
+[####----------------] 19%
+```
+
 
 ## 원문 링크 
 
