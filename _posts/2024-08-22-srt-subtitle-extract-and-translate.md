@@ -21,8 +21,10 @@ brew install openai-whisper
  
 
 ```
-whisper <영상파일명> --model large --output_format srt
+whisper <영상파일명> --model large --output_format srt  --condition_on_previous_text	False 
 ```
+*  ```--condition_on_previous_text	False``` 추가, 이 옵션이 없으니까 3분넘게 같은 자막으로 번역되는 루프를 제거해준다   
+
 언어 옵션도 있는데 기본으론 자동설정이기 때문에 특별히 지정하진 않음    
 번역옵션도 있지만 형편없기 때문에 다른 툴로 번역한다       
 
@@ -74,7 +76,7 @@ FILEPATH="$1"
 source ~/bin/srtenv/bin/activate
 
 # srtranslator 명령어 실행 
-python -m srtranslator "$FILEPATH" -o ko
+python -m srtranslator "$FILEPATH" -o ko 
 
 # 가상환경 비활성화
 deactivate
